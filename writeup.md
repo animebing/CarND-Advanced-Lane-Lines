@@ -93,7 +93,29 @@ draw lane line area in warpped mask in green, then tranform this area back and c
 ![laneline](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/laneline.jpg "lane line images")
 
 ### Pipeline(Video)
-for project_video.mp4, I process each frame using the pipeline above for single image, in most frame, it is okay, but when there is shadow, the pipeline fails because shadow area in S channel image has large value, which intorduces many noise points, the S channel mask, warped mask, searching window and fitting lane are as below
+for project_video.mp4, I process each frame using the pipeline above for single image, in most frame, it is okay, but when there is shadow, the pipeline fails because shadow area in S channel image has large value, which intorduces many noise points, the undistorted image and S channel image are as below
+
+![shadow_s](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/shadow_s.jpg "shadow and s channel images")
+
+the resulting mask image, searching window and final lane line images are as below
+
+![shadow_final](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/shadow_final.jpg)
+
+because shadow causes lightness change, so I am trying to solve it using L(Lightness) channel in HLS space, corresponding L and R channel images are as below
+
+![ls_channel](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/ls_channel.jpg "Lightness and Saturation channel images")
+
+the shadow part in L channel image is much darker, I use (100, 200) to threshold L channel image, then do "and" operation to L mask ans S mask, at last do "or" operation with horizontal gradient to get the final mask, corresponding masks are as below
+
+![final_ls_mask](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/final_ls_mask.jpg)
+
+there isn't too much points in ls_mask, but the horizontal mask contains enough points to find lane line, by using L channel image, the shadow points are filtered out, this strategy works well in image without shadow. After this process, the searching window and final lane line image are as below
+
+![shadow_ls_mask](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/shadow_ls_final.jpg)
+
+
+
+
 
 
 
