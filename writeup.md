@@ -113,4 +113,4 @@ there isn't too much points in ls_mask, but the horizontal mask contains enough 
 
 ![shadow_ls_mask](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/shadow_ls_final.jpg)
 
-Here's the [link] for the result of project_video.mp4(./project_video_color.mp4)
+Here's the [link](./project_video_color.mp4) for the result of project_video.mp4
