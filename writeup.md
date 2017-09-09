@@ -3,7 +3,7 @@
 ## Project summary
 In this project, first, I find the way to do calibration with opencv python version and review the process about how to do camera calibration. Second, I find why to use horizontal gradient and S(Saturation) channel in HLS space to threshold the image. Then do perspective transformation and window searching to find left and right lane line. At last, transform back to the original image
 
----
+
 ## Camera calibration
 Camera calibration is the process to get camera intrinsic parameter, distortion parameter and extrinsic paramter, in this project, computed intrinsic parameter and distortion parameter are used to distort image, the shape, size and location of objects are distorted because of distortion, so it is important to do image distortion before any other operation.
 
@@ -30,13 +30,13 @@ now we can undistort a road image using computed calibration results as below-it
 ### threshold image
 
 Here I am going to threshold image to find lane line, in above image, the left lane line is yellow and right laneline is white
----
+
 #### R(Red), G(Green), B(Blue) channel image
 
 ![RGB channels](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/RGBchannels.jpg "R G B channel images")
 
 for the white lane line, the R,G,B channels are similar, but for yellow lane line, it is more obvious in R channel image than other two channels
----
+
 #### H(Hue), L(lightness), S(Saturation) channel image
 
 Althogh yellow lane line is more obvious in R channel, but the contrast between lane line and surrounding road is not very high, so here we can try to convert image from RGB space to HLS space, below is corresponding image for each channel
@@ -44,7 +44,7 @@ Althogh yellow lane line is more obvious in R channel, but the contrast between 
 ![HLS channels](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/HLSchannels.jpg "H L S channel images")
 
 in S channel images, the yellow lane can be easily recoginized, compared to that in R channel image, it has much higher constrast with surrounding road, so next I use S channel to find yellow lane line
----
+
 #### Sobel operator for gradient
 
 here we use Sobel gradient to compute the gradient in horizontal and vertical direction, here I will use another image(**I2, the former image is I1**) to demostrate the result of Sobel operator, because in the gray scale image of I1, it is hard to tell road and lane line as below, that is also the reason why to use other color info to find lane line
@@ -60,14 +60,14 @@ then I use (40, 100) to threshold horizontal, vertical and total gradient magnit
 ![sobel](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/sobel.jpg "sobel image")
 
 we can get these three magnitude image is similar except for some horizontal lines in vertical and total magtitude images, and the gradient direction image is more like noise map, based on above, horizontal gradient is use to find lane line
----
+
 #### combine horizontal gradient and S channel 
 use (40, 100) to threshold horizontal gradient magnitude and (180, 255) to threshold S channel, then combine these two mask by "or" operation, separating mask and combined mask is as below
 
 ![combined mask](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/combined.jpg "combined mask image")
 
 in combined mask image, there is a red polygon, the area within it is choosed and other parts in the image is abandoned, this trick is used to filter noise points and the area is hand designed
----
+
 #### perspective transformation
 transform choosed area to bird-eye view (from top to down), in this view, the left and right lane line is approximately parallel, the points used to compute perspective matrix is as below
 
@@ -81,7 +81,7 @@ transform choosed area to bird-eye view (from top to down), in this view, the le
 then image I2, warped image, and warped mask is as below
 
 ![warped](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/warped.jpg "warped image")
----
+
 #### histogram, window serching and lane line fitting
 for the warped mask, compute the number of points in each horizontal position in a histgram, find the peak in left and right part as the initial position to find points in corresponding lane line, then find all left lane points and right lane points along vertical direction, at last, fit these points with quadratic curve. The histgram, searching windows and fitting curve is as below
 
