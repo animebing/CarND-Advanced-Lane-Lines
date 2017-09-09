@@ -18,7 +18,7 @@ the classic camera calibration method is proposed by Zhengyou Zhang, you can fin
 
 the corresponding opencv python tutorial can be found in [http://docs.opencv.org/3.3.0/dc/dbb/tutorial_py_calibration.html](http://docs.opencv.org/3.3.0/dc/dbb/tutorial_py_calibration.html), below is the original chessboard and undistored chessboard using calibration results
 
-![chessboard](https://github.com/animebing/CarND-Advanced-Lane-Lines/tree/master/output_images/original_distorted.jpg "Original and Undistorted Chessboard")
+![chessboard](./output_images/original_distorted.jpg "Original and Undistorted Chessboard")
 
 ## Pipeline(single image)
 
