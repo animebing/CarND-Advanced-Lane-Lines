@@ -1,21 +1,22 @@
-## Writeup Template
+## Advanced lane line detection
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+### Project summary
+In this project, first, I find the way to do calibration with opencv python version and review the process about how to do camera calibration. Second, I find why to use horizontal gradient and S(Saturation) channel in HLS space to threshold the image. Then do perspective transformation and window searching to find left and right lane line. At last, transform back to the original image
 
 ---
+### Camera calibration
+Camera calibration is the process to get camera intrinsic parameter, distortion parameter and extrinsic paramter, in this project, computed intrinsic parameter and distortion parameter are used to distort image, the shape, size and location of objects are distorted because of distortion, so it is important to do image distortion before any other operation.
 
-**Advanced Lane Finding Project**
+the classic camera calibration method is proposed by Zhengyou Zhang, you can find it in [http://www.vision.caltech.edu/bouguetj/calib_doc/papers/zhan99.pdf](http://www.vision.caltech.edu/bouguetj/calib_doc/papers/zhan99.pdf), the recommended calibration pipeline are 
 
-The goals / steps of this project are the following:
+* Print a pattern(chessboard here) and attach it to a planar surface
+* Take a few images of the pattern plane under different orientations by moving camera or the patter plane
+* Detect the feature points(chessboard corners here) in the images
+* Estimate the five intrinsic parameters and six extrinsic parameters
+* Estimate the coefficient of the radial distortion
+* Refine all parameters by minimizing the projection error
 
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply a distortion correction to raw images.
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view").
-* Detect lane pixels and fit to find the lane boundary.
-* Determine the curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+the corresponding opencv python tutorial can be found in [http://docs.opencv.org/3.3.0/dc/dbb/tutorial_py_calibration.html](http://docs.opencv.org/3.3.0/dc/dbb/tutorial_py_calibration.html)
 
 [//]: # (Image References)
 
